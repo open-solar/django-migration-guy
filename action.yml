@@ -19,6 +19,9 @@ inputs:
   labels:
     description: A comma separated list of labels for pull request.
     default: auto-migration
+  reviewers:
+    description: A comma separated list of reviewers.
+    default: ""
 runs:
   using: composite
   steps:
@@ -53,7 +56,7 @@ runs:
         delete-branch: true
         branch: auto/django-mig-merge
         labels: ${{ inputs.labels }}
-        reviewers: ${{ github.actor }}
+        reviewers: ${{ github.actor }},${{ inputs.reviewers }}
     - name: Commit changes
       if:  ${{ inputs.strategy == 'push' }} 
       uses: stefanzweifel/git-auto-commit-action@v4
